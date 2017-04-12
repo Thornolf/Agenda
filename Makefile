@@ -16,7 +16,7 @@ CMX = $(ML:.ml=.cmx)
 
 
 OCAMLDPE = ocamldep
-CAMLFLAGS = -w Aelz -warn-error A
+#CAMLFLAGS = -w Aelz -warn-error A
 OCAMLC = ocamlc $(CAMLFLAGS)
 OCAMLOPT = ocamlopt $(CAMLFLAGS)
 OCAMLDOC = ocamldoc -html -d $(ROOT)/doc
