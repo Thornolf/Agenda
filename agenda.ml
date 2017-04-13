@@ -1,3 +1,4 @@
+
 type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 
 module type AGENDA =
@@ -14,17 +15,17 @@ module Agenda : AGENDA =
     let addContact list1 newTuple =
       let newco = [Contact.formatContact newTuple] in List.append list1 newco
 
-    let printContacts lst whichfield str =
+    let rec printContacts lst whichfield str =
       match lst with
-        | [] -> Printf.printf("AH");
+        | [] -> ();
         | x::xs -> match whichfield with
-                    | All -> Printf.printf("Je print : All\n");
-                    | Id -> Printf.printf("ID");
-                    | FirstName -> Printf.printf("FirstName");
-                    | LastName -> Printf.printf("LastName");
-                    | Age -> Printf.printf("Age");
-                    | Email -> Printf.printf("Email");
-                    | Phone -> Printf.printf("Phone");
+        	| All -> Printf.printf "%d %s %s %d %s %s" 0 (Contact.getFirstName x) (Contact.getLastName x) (Contact.getAge x) (Contact.getEmail x) (Contact.getPhone x) ; printContacts xs whichfield str
+            | Id -> Printf.printf "ID"
+            | FirstName -> Printf.printf "%s\n" (Contact.getFirstName x) ; printContacts xs whichfield str
+            | LastName -> Printf.printf "%s\n" (Contact.getLastName x) ; printContacts xs whichfield str
+            | Age -> Printf.printf "%d\n" (Contact.getAge x) ; printContacts xs whichfield str
+            | Email -> Printf.printf "%s\n" (Contact.getEmail x) ; printContacts xs whichfield str
+            | Phone -> Printf.printf "%s\n" (Contact.getPhone x) ; printContacts xs whichfield str
   end
 
   (* let drop list n =
