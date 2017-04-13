@@ -4,9 +4,11 @@ type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 module type AGENDA =
   sig
     val addContact : Contact.contact list -> string * string * int * string * string -> Contact.contact list
-    (* val getContactId   : Contact.contact list -> field -> string -> int
+    (*
+    val getContactId   : Contact.contact list -> field -> string -> int
     val removeContact  : Contact.contact list -> int -> Contact.contact list
-    val replaceContact : Contact.contact list -> int -> string * string * int * string * string -> Contact.contact list *)
+    val replaceContact : Contact.contact list -> int -> string * string * int * string * string -> Contact.contact list
+    *)
     val printContacts  : Contact.contact list -> field -> string -> unit
   end
 
@@ -26,7 +28,12 @@ module Agenda : AGENDA =
             | Age -> Printf.printf "%d\n" (Contact.getAge x) ; printContacts xs whichfield str
             | Email -> Printf.printf "%s\n" (Contact.getEmail x) ; printContacts xs whichfield str
             | Phone -> Printf.printf "%s\n" (Contact.getPhone x) ; printContacts xs whichfield str
-  end
+
+(*ex: String = "Robert" && field = "FirstName" // On va donc rechercher dans tous les field FirstName le string Robert*)
+
+    (* let getContactId lst fld str = *)
+
+    end
 
   (* let drop list n =
       let rec aux i = function

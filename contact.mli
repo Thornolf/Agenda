@@ -7,3 +7,5 @@ val getLastName : contact -> string
 val getAge : contact -> int
 val getEmail : contact -> string
 val getPhone : contact -> string
+val sizelst : 'a list -> int
+val strSub : string -> int -> string
