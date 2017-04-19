@@ -33,13 +33,13 @@ module Agenda : AGENDA =
 			function
 				| [] -> -1;
 				| x::xs -> match fld with
-					| All -> if str = Contact.getFirstName x || str = Contact.getLastName x || (int_of_string str) = Contact.getAge x || str = Contact.getEmail x || str = Contact.getPhone x then acc else loop (acc + 1) xs
+					| All -> if Contact.cmpAllUnsensi str acc x == 0 then acc else loop (acc + 1) xs
 					| Id -> acc
-					| FirstName -> if str = Contact.getFirstName x then acc else loop (acc + 1) xs
-					| LastName -> if str = Contact.getLastName x then acc else loop (acc + 1) xs
-					| Age -> if (int_of_string str) = Contact.getAge x then acc else loop (acc + 1) xs
-					| Email -> if str = Contact.getEmail x then acc else loop (acc + 1) xs
-					| Phone -> if str = Contact.getPhone x then acc else loop (acc + 1) xs
+					| FirstName -> if Contact.strCmpUnsensi str (Contact.getFirstName x) == 0 then acc else loop (acc + 1) xs
+					| LastName -> if Contact.strCmpUnsensi str (Contact.getLastName x) == 0 then acc else loop (acc + 1) xs
+					| Age -> if Contact.strCmpUnsensi str (string_of_int (Contact.getAge x)) == 0 then acc else loop (acc + 1) xs
+					| Email -> if Contact.strCmpUnsensi str (Contact.getEmail x) == 0 then acc else loop (acc + 1) xs
+					| Phone -> if Contact.strCmpUnsensi str (Contact.getPhone x) == 0 then acc else loop (acc + 1) xs
 		in loop 0 lst
 
 	let rec removeContact lst wch = match lst with
