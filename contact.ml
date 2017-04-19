@@ -41,6 +41,8 @@ module Contact : CONTACT =
 		let buff = Buffer.create 0
 		in Buffer.add_string buff s ; Buffer.sub buff 0 x
 
+
+
 		let printID id = print_int id ; print_string " "
 		let printFirstName firstName = print_string (strSub firstName 16) ; print_string " "
 		let printLastName lastName = print_string (strSub lastName 16) ; print_string " "
@@ -66,8 +68,11 @@ module Contact : CONTACT =
 			then 0
 			else -1
 
-		let cmpContact first sec =
-			if getLastName first > getLastName sec || getFirstName first > getFirstName sec
+	end
+		(* let cmpContact first sec =
+			if getLastName first > getLastName sec
 				then 1
-			else if getLastName first =
-		end
+			else if getLastName first = getLastName sec
+				then 0
+			else if getLastName first < getFirstName sec
+				then -1 *)
