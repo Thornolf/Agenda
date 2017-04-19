@@ -1,3 +1,5 @@
+open Contact;;
+
 type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 
 exception 	Remove_Impossible_On_An_Empty_List
@@ -15,7 +17,8 @@ module type AGENDA =
 module Agenda : AGENDA =
   struct
     let addContact list1 newTuple =
-      let newco = [Contact.formatContact newTuple] in List.append list1 newco
+      let newco = [Contact.formatContact newTuple]
+	  in List.append list1 newco
 
     let printContacts lst whichfield str =
     	let rec loop acc = function
