@@ -16,7 +16,15 @@ module Agenda : AGENDA =
   struct
     let addContact list1 newTuple =
       let newco = [Contact.formatContact newTuple]
-	  in List.append list1 newco
+	  in List.sort (fun x y -> if (Contact.getLastName x) > (Contact.getLastName y)
+                                                                  then 1
+                                                                  else
+                                                                    if (Contact.getLastName x) <> (Contact.getLastName y)
+                                                                      then 0
+                                                                    else
+                                                                      if (Contact.getFirstName x) > (Contact.getFirstName y)
+                                                                        then 1
+                                                                      else 0 ) (List.append list1 newco)
 
     let printContacts lst whichfield str =
     	let rec loop acc = function

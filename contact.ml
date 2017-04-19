@@ -1,4 +1,3 @@
-
 module type CONTACT =
 	sig
 		type contact = (string * string * int * string * string);;
@@ -11,6 +10,8 @@ module type CONTACT =
 		val getPhone : contact -> string
 		val sizelst : 'a list -> int
 		val strSub : string -> int -> string
+		val addString : string -> int -> string
+		val printElem : string -> int -> string
 		val strCmpUnsensi : string -> string -> int
 		val cmpAllUnsensi : string -> int -> contact -> int
 
@@ -41,14 +42,23 @@ module Contact : CONTACT =
 		let buff = Buffer.create 0
 		in Buffer.add_string buff s ; Buffer.sub buff 0 x
 
+		let addString str x =
+			let buff = Buffer.create 0
+			in Buffer.add_string buff str ;
+			Buffer.add_string buff "                                    " ; Buffer.sub buff 0 x
 
+		let printElem str x =
+			if x < String.length str
+				then strSub str x
+			else
+				addString str x
 
-		let printID id = print_int id ; print_string " "
-		let printFirstName firstName = print_string (strSub firstName 16) ; print_string " "
-		let printLastName lastName = print_string (strSub lastName 16) ; print_string " "
-		let printAge age = print_string (strSub (string_of_int age) 4) ; print_string " "
-		let printEmail email = print_string (strSub email 32) ; print_string " "
-		let printPhone phone = print_string (strSub phone 14) ; print_endline ""
+		let printID id = print_string (printElem (string_of_int id) 4)
+		let printFirstName firstName = print_string (printElem firstName 16)
+		let printLastName lastName = print_string (printElem lastName 16)
+		let printAge age = print_string (printElem (string_of_int age) 4)
+		let printEmail email = print_string (printElem email 32)
+		let printPhone phone = print_string (printElem phone 14) ; print_endline ""
 
 		let printAll id contactT =
 			printID id; printFirstName (getFirstName contactT) ; printLastName (getLastName contactT); printAge (getAge contactT) ; printEmail (getEmail contactT) ; printPhone (getPhone contactT)
@@ -67,12 +77,4 @@ module Contact : CONTACT =
 				strCmpUnsensi refStr (getPhone tupleToCheck) = 0
 			then 0
 			else -1
-
 	end
-		(* let cmpContact first sec =
-			if getLastName first > getLastName sec
-				then 1
-			else if getLastName first = getLastName sec
-				then 0
-			else if getLastName first < getFirstName sec
-				then -1 *)
