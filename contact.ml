@@ -1,7 +1,7 @@
-type contact = (string * string * int * string * string);;
 
 module type CONTACT =
 	sig
+		type contact = (string * string * int * string * string);;
 		val createContact : string -> string -> int -> string -> string -> (string * string * int * string * string)
 		val formatContact : string * string * int * string * string -> contact
 		val getFirstName : contact -> string
@@ -25,6 +25,7 @@ module type CONTACT =
 
 module Contact : CONTACT =
 	struct
+		type contact = (string * string * int * string * string);;
 		let createContact f l a e p = (f, l, a, e, p);;
 		let formatContact (f, l, a, e, p) = (f, l, a, e, p);;
 		let getFirstName (f, _, _, _, _) = f;;

@@ -1,5 +1,3 @@
-open Contact;;
-
 type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 
 exception 	Remove_Impossible_On_An_Empty_List
