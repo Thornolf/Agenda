@@ -14,7 +14,7 @@ module Agenda : AGENDA =
     let addContact list1 newTuple =
       let newco = [Contact.formatContact newTuple] in List.append list1 newco
 
-    let printContacts lst whichfield str =
+    (* let printContacts lst whichfield str =
 		let rec loop acc = function
         	| [] -> print_string ""
 			| x::xs when str = "" -> Contact.printAll acc x ; loop (acc + 1) xs
@@ -26,7 +26,21 @@ module Agenda : AGENDA =
 				| Age -> print_endline "age" ; loop (acc + 1) xs
 				| Email -> print_endline "mail" ; loop (acc + 1) xs
 				| Phone -> print_endline "phone" ; loop (acc + 1) xs
-		in loop 0 lst
+		in loop 0 lst *)
+
+    let printContacts lst whichfield str =
+    let rec loop acc = function
+    | [] -> print_string ""
+    | x::xs when str = "" -> Contact.printAll acc x ; loop (acc + 1) xs
+    | x::xs -> match whichfield with
+    | All -> print_endline "all" ; loop (acc + 1) xs
+    | Id -> if Contact.strCmpUnsensi str (string_of_int acc) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    | FirstName -> if Contatc.strCmpUnsensi str (Contact.getFirstName x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    | LastName -> print_endline "last" ; loop (acc + 1) xs
+    | Age -> print_endline "age" ; loop (acc + 1) xs
+    | Email -> print_endline "mail" ; loop (acc + 1) xs
+    | Phone -> print_endline "phone" ; loop (acc + 1) xs
+    in loop 0 lst
 
     let getContactId lst fld str =
 		let rec loop lst fld str acc =
