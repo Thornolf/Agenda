@@ -1,5 +1,8 @@
 type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 
+exception 	Remove_Impossible_On_An_Empty_List
+exception	Remove_Using_An_Invalid_Id
+
 module type AGENDA =
   sig
     val addContact : Contact.contact list -> string * string * int * string * string -> Contact.contact list
@@ -42,8 +45,12 @@ module Agenda : AGENDA =
 					| Phone -> if Contact.strCmpUnsensi str (Contact.getPhone x) == 0 then acc else loop (acc + 1) xs
 		in loop 0 lst
 
-	let rec removeContact lst wch = match lst with
-		| [] -> []
+	let rec removeContact lst wch =
+		if wch < 0 || wch > Contact.sizelst lst
+			then raise (Remove_Using_An_Invalid_Id)
+		else
+			match lst with
+		| [] -> raise (Remove_Impossible_On_An_Empty_List)
 		| x::xs -> if wch = 0 then xs else x :: removeContact xs (wch - 1)
 
 
