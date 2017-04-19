@@ -65,8 +65,9 @@ module Contact : CONTACT =
 				strCmpUnsensi refStr (getPhone tupleToCheck) = 0
 			then 0
 			else -1
+
+		let cmpContact first sec =
+			if getLastName first > getLastName sec || getFirstName first > getFirstName sec
+				then 1
+			else if getLastName first =
 		end
- (* let cmpContact first sec =
- 	if getLastName first > getLastName sec || getFirstName first > getFirstName sec
-		then 1
-	else if getLastName first = *)
