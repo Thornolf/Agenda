@@ -10,6 +10,7 @@ val getPhone : contact -> string
 val sizelst : 'a list -> int
 val strSub : string -> int -> string
 val strCmpUnsensi : string -> string -> int
+val cmpAllUnsensi : string -> int -> contact -> int
 
 val printID : int -> unit
 val printFirstName : string -> unit

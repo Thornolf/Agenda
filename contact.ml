@@ -29,3 +29,13 @@ let strCmpUnsensi refStr toCheck =
 	let lowRef = String.lowercase_ascii refStr
 	and lowToCheck = String.lowercase_ascii toCheck
 	in String.compare lowRef lowToCheck
+
+let cmpAllUnsensi refStr id tupleToCheck =
+	if strCmpUnsensi refStr (getFirstName tupleToCheck) = 0 ||
+		strCmpUnsensi refStr (getLastName tupleToCheck) = 0 ||
+		strCmpUnsensi refStr (string_of_int id) = 0 ||
+		strCmpUnsensi refStr (string_of_int (getAge tupleToCheck)) = 0 ||
+		strCmpUnsensi refStr (getEmail tupleToCheck) = 0 ||
+		strCmpUnsensi refStr (getPhone tupleToCheck) = 0
+	then 0
+	else -1

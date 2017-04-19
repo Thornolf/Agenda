@@ -14,47 +14,33 @@ module Agenda : AGENDA =
     let addContact list1 newTuple =
       let newco = [Contact.formatContact newTuple] in List.append list1 newco
 
-    (* let printContacts lst whichfield str =
-		let rec loop acc = function
-        	| [] -> print_string ""
-			| x::xs when str = "" -> Contact.printAll acc x ; loop (acc + 1) xs
-        	| x::xs -> match whichfield with
-				| All -> print_endline "all" ; loop (acc + 1) xs
-				| Id -> if Contact.strCmpUnsensi str (string_of_int acc) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
-				| FirstName -> if Contatc ; loop (acc + 1) xs
-				| LastName -> print_endline "last" ; loop (acc + 1) xs
-				| Age -> print_endline "age" ; loop (acc + 1) xs
-				| Email -> print_endline "mail" ; loop (acc + 1) xs
-				| Phone -> print_endline "phone" ; loop (acc + 1) xs
-		in loop 0 lst *)
-
     let printContacts lst whichfield str =
-    let rec loop acc = function
-    | [] -> print_string ""
-    | x::xs when str = "" -> Contact.printAll acc x ; loop (acc + 1) xs
-    | x::xs -> match whichfield with
-    | All -> print_endline "all" ; loop (acc + 1) xs
-    | Id -> if Contact.strCmpUnsensi str (string_of_int acc) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
-    | FirstName -> if Contatc.strCmpUnsensi str (Contact.getFirstName x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
-    | LastName -> print_endline "last" ; loop (acc + 1) xs
-    | Age -> print_endline "age" ; loop (acc + 1) xs
-    | Email -> print_endline "mail" ; loop (acc + 1) xs
-    | Phone -> print_endline "phone" ; loop (acc + 1) xs
-    in loop 0 lst
+    	let rec loop acc = function
+    		| [] -> print_string ""
+    		| x::xs when str = "" -> Contact.printAll acc x ; loop (acc + 1) xs
+    		| x::xs -> match whichfield with
+    			| All -> if Contact.cmpAllUnsensi str acc x = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    			| Id -> if Contact.strCmpUnsensi str (string_of_int acc) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    			| FirstName -> if Contact.strCmpUnsensi str (Contact.getFirstName x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    			| LastName -> if Contact.strCmpUnsensi str (Contact.getLastName x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    			| Age -> if Contact.strCmpUnsensi str (string_of_int (Contact.getAge x)) = 0 then Contact.printAll acc x; loop (acc + 1) xs
+    			| Email -> if Contact.strCmpUnsensi str (Contact.getEmail x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    			| Phone -> if Contact.strCmpUnsensi str (Contact.getPhone x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
+    	in loop 0 lst
 
     let getContactId lst fld str =
-		let rec loop lst fld str acc =
-			match lst with
+		let rec loop acc =
+			function
 				| [] -> -1;
 				| x::xs -> match fld with
-					| All -> if str = Contact.getFirstName x || str = Contact.getLastName x || (int_of_string str) = Contact.getAge x || str = Contact.getEmail x || str = Contact.getPhone x then acc else loop xs fld str acc + 1
+					| All -> if str = Contact.getFirstName x || str = Contact.getLastName x || (int_of_string str) = Contact.getAge x || str = Contact.getEmail x || str = Contact.getPhone x then acc else loop (acc + 1) xs
 					| Id -> acc
-					| FirstName -> if str = Contact.getFirstName x then acc else loop xs fld str acc + 1
-					| LastName -> if str = Contact.getLastName x then acc else loop xs fld str acc + 1
-					| Age -> if (int_of_string str) = Contact.getAge x then acc else loop xs fld str acc + 1
-					| Email -> if str = Contact.getEmail x then acc else loop xs fld str acc + 1
-					| Phone -> if str = Contact.getPhone x then acc else loop xs fld str acc + 1
-		in loop lst fld str 0
+					| FirstName -> if str = Contact.getFirstName x then acc else loop (acc + 1) xs
+					| LastName -> if str = Contact.getLastName x then acc else loop (acc + 1) xs
+					| Age -> if (int_of_string str) = Contact.getAge x then acc else loop (acc + 1) xs
+					| Email -> if str = Contact.getEmail x then acc else loop (acc + 1) xs
+					| Phone -> if str = Contact.getPhone x then acc else loop (acc + 1) xs
+		in loop 0 lst
 
 	let rec removeContact lst wch = match lst with
 		| [] -> []
