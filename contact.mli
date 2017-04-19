@@ -9,3 +9,12 @@ val getEmail : contact -> string
 val getPhone : contact -> string
 val sizelst : 'a list -> int
 val strSub : string -> int -> string
+val strCmpUnsensi : string -> string -> int
+
+val printID : int -> unit
+val printFirstName : string -> unit
+val printLastName : string -> unit
+val printAge : int -> unit
+val printEmail : string -> unit
+val printPhone : string -> unit
+val printAll : int -> contact -> unit
