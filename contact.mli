@@ -12,6 +12,8 @@ type contact
 	val myStrStr : string -> String.t -> int
 	val strCmpUnsensi : string -> string -> int
 	val cmpAllUnsensi : string -> int -> contact -> int
+	val allNumber : string -> bool
+	val verifPhone : string -> bool 
 
 	val verifAge : int -> bool
 

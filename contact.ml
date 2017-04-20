@@ -15,6 +15,8 @@ module type CONTACT =
 		val myStrStr : string -> String.t -> int
 		val strCmpUnsensi : string -> string -> int
 		val cmpAllUnsensi : string -> int -> contact -> int
+		val allNumber : string -> bool
+		val verifPhone : string -> bool
 
 		val verifAge : int -> bool
 
@@ -92,5 +94,16 @@ module Contact : CONTACT =
 				strCmpUnsensi refStr (getPhone tupleToCheck) = 0
 			then 0
 			else -1
+
+		let allNumber = function
+			| str when str = "0" -> false
+			| _ -> true
+
+		let verifPhone  = function
+			| str when String.get str 0 <> '0' -> false
+			| str when String.length str <> 14 -> false
+			| str when String.get str 2 <> ' ' && String.get str 5 <> ' ' && String.get str 8 <> ' ' && String.get str 11 <> ' ' -> false
+			| str when allNumber str = false -> false
+			| _ -> true
 
 	end
