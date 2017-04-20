@@ -8,14 +8,17 @@ type contact
 	val getEmail : contact -> string
 	val getPhone : contact -> string
 	val sizelst : 'a list -> int
-	val strSub : string -> int -> string
+	val strSub : string -> int -> int -> string
 	val myStrStr : string -> String.t -> int
 	val strCmpUnsensi : string -> string -> int
 	val cmpAllUnsensi : string -> int -> contact -> int
 	val allNumber : string -> bool
-	val verifPhone : string -> bool 
+	val verifPhone : string -> bool
 
 	val verifAge : int -> bool
+
+	val makeHyphen : string -> char -> string
+	val makeFirstName : string -> string
 
 	val printID : int -> unit
 	val printFirstName : string -> unit
