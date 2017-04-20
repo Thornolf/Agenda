@@ -35,33 +35,7 @@ module type CONTACT =
 module Contact : CONTACT =
 	struct
 		type contact = (string * string * int * string * string);;
-		let createContact f l a e p = (f, l, a, e, p);;
-		let formatContact (f, l, a, e, p) = (String.capitalize_ascii (makeFirstName (String.lowercase_ascii (String.trim f))), String.uppercase_ascii (String.trim l), a, e, p);;
 
-		let	verifAge age =
-			if age <= 0 || age >= 120 then false
-			else true
-
-		let makeHyphen str chr =
-			if String.contains str chr = false then str else
-			if String.length str < String.index str chr then str
-			else
-				let partA = strSub str ((String.index str chr) + 1) 0
-				and partB = strSub str (((String.length str) - String.index str chr) - 1) ((String.index str chr) + 1)
-				in partA ^ (String.capitalize_ascii partB);;
-
-		let makeFirstName = function
-			| hyphenName when String.contains hyphenName '-' = true -> makeHyphen hyphenName '-'
-			| spaceName when String.contains spaceName ' ' = true -> makeHyphen spaceName ' '
-			| aposName when String.contains aposName '\'' = true -> makeHyphen aposName '\''
-			| str -> makeHyphen str ' '
-
-		let getFirstName (f, _, _, _, _) = f;;
-		let getLastName (_, l, _, _, _) = l;;
-		let getAge (_, _, a, _, _) = a;;
-		let getEmail (_ , _, _, e, _) = e;;
-		let getPhone (_, _, _, _, p) = p;;
-		let sizelst l = List.fold_left (fun acc _ -> acc + 1) 0 l;;
 		let	strSub s en beg =
 			if String.length s < en
 				then s
@@ -70,6 +44,36 @@ module Contact : CONTACT =
 			else
 				let buff = Buffer.create 0
 				in Buffer.add_string buff s ; Buffer.sub buff beg en
+
+		let makeHyphen str chr =
+			if String.contains str chr = false then str else
+			if String.length str < String.index str chr then str
+			else
+				let partA = strSub str ((String.index str chr) + 1) 0
+				and partB = strSub str (((String.length str) - String.index str chr) - 1) ((String.index str chr) + 1)
+				in partA ^ (String.capitalize_ascii partB)
+
+		let makeFirstName = function
+			| hyphenName when String.contains hyphenName '-' = true -> makeHyphen hyphenName '-'
+			| spaceName when String.contains spaceName ' ' = true -> makeHyphen spaceName ' '
+			| aposName when String.contains aposName '\'' = true -> makeHyphen aposName '\''
+			| str -> makeHyphen str ' '
+
+		let createContact f l a e p = (f, l, a, e, p);;
+		let formatContact (f, l, a, e, p) = (String.capitalize_ascii (makeFirstName (String.lowercase_ascii (String.trim f))), String.uppercase_ascii (String.trim l), a, e, p);;
+
+		let	verifAge age =
+			if age <= 0 || age >= 120 then false
+			else true
+
+
+		let getFirstName (f, _, _, _, _) = f;;
+		let getLastName (_, l, _, _, _) = l;;
+		let getAge (_, _, a, _, _) = a;;
+		let getEmail (_ , _, _, e, _) = e;;
+		let getPhone (_, _, _, _, p) = p;;
+		let sizelst l = List.fold_left (fun acc _ -> acc + 1) 0 l;;
+
 
 		let addString str x =
 			let buff = Buffer.create 0
