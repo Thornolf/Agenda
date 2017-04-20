@@ -13,6 +13,8 @@ type contact
 	val strCmpUnsensi : string -> string -> int
 	val cmpAllUnsensi : string -> int -> contact -> int
 
+	val verifAge : int -> bool
+
 	val printID : int -> unit
 	val printFirstName : string -> unit
 	val printLastName : string -> unit

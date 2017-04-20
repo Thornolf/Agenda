@@ -16,6 +16,8 @@ module type CONTACT =
 		val strCmpUnsensi : string -> string -> int
 		val cmpAllUnsensi : string -> int -> contact -> int
 
+		val verifAge : int -> bool
+
 		val printID : int -> unit
 		val printFirstName : string -> unit
 		val printLastName : string -> unit
@@ -31,8 +33,10 @@ module Contact : CONTACT =
 		let createContact f l a e p = (f, l, a, e, p);;
 		let formatContact (f, l, a, e, p) = (f, l, a, e, p);;
 
+		let	verifAge age =
+			if age <= 0 || age >= 120 then false
+			else true
 
-		
 		let getFirstName (f, _, _, _, _) = f;;
 		let getLastName (_, l, _, _, _) = l;;
 		let getAge (_, _, a, _, _) = a;;

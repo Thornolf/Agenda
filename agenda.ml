@@ -2,6 +2,7 @@ type field = All | Id | FirstName | LastName | Age | Email | Phone;;
 
 exception 	Remove_Impossible_On_An_Empty_List
 exception	Remove_Using_An_Invalid_Id
+exception 	Add_Contact_With_Invalid_Data
 
 module type AGENDA =
   sig
@@ -15,16 +16,11 @@ module type AGENDA =
 module Agenda : AGENDA =
   struct
     let addContact list1 newTuple =
+	if Contact.getLastName newTuple = "" || Contact.getFirstName newTuple = "" || Contact.verifAge (getAge newTuple) = false
+		then raise (Add_Contact_With_Invalid_Data)
+	else
       let newco = [Contact.formatContact newTuple]
-	  in List.sort (fun first sec -> if (Contact.getLastName first) > (Contact.getLastName sec)
-                                                                  then 1
-                                                                  else
-                                                                    if (Contact.getLastName first) <> (Contact.getLastName sec)
-                                                                      then 0
-                                                                    else
-                                                                      if (Contact.getFirstName first) > (Contact.getFirstName sec)
-                                                                        then 1
-                                                                      else 0 ) (List.append list1 newco)
+	  in List.sort (fun first sec -> if first > sec then 1 else 0) (List.append list1 newco)
 
     let printContacts lst whichfield str =
     	let rec loop acc = function
