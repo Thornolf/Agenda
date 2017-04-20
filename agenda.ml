@@ -16,7 +16,7 @@ module type AGENDA =
 module Agenda : AGENDA =
   struct
     let addContact list1 newTuple =
-	if Contact.getLastName newTuple = "" || Contact.getFirstName newTuple = "" || Contact.verifAge (getAge newTuple) = false
+	if Contact.getLastName newTuple = "" || Contact.getFirstName newTuple = "" || Contact.verifAge (Contact.getAge newTuple) = false
 		then raise (Add_Contact_With_Invalid_Data)
 	else
       let newco = [Contact.formatContact newTuple]

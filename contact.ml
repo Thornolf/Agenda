@@ -30,8 +30,8 @@ module type CONTACT =
 module Contact : CONTACT =
 	struct
 		type contact = (string * string * int * string * string);;
-		let createContact f l a e p = (f, l, a, e, p);;
-		let formatContact (f, l, a, e, p) = (f, l, a, e, p);;
+		let createContact f l a e p = (String.capitalize_ascii (String.lowercase_ascii f), String.uppercase_ascii l, a, e, p);;
+		let formatContact (f, l, a, e, p) = (String.capitalize_ascii (String.lowercase_ascii f), String.uppercase_ascii l, a, e, p);;
 
 		let	verifAge age =
 			if age <= 0 || age >= 120 then false
