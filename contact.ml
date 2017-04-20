@@ -12,6 +12,7 @@ module type CONTACT =
 		val strSub : string -> int -> string
 		val addString : string -> int -> string
 		val printElem : string -> int -> string
+		val myStrStr : string -> String.t -> int
 		val strCmpUnsensi : string -> string -> int
 		val cmpAllUnsensi : string -> int -> contact -> int
 
@@ -29,6 +30,9 @@ module Contact : CONTACT =
 		type contact = (string * string * int * string * string);;
 		let createContact f l a e p = (f, l, a, e, p);;
 		let formatContact (f, l, a, e, p) = (f, l, a, e, p);;
+
+
+		
 		let getFirstName (f, _, _, _, _) = f;;
 		let getLastName (_, l, _, _, _) = l;;
 		let getAge (_, _, a, _, _) = a;;
@@ -63,10 +67,17 @@ module Contact : CONTACT =
 		let printAll id contactT =
 			printID id; printFirstName (getFirstName contactT) ; printLastName (getLastName contactT); printAge (getAge contactT) ; printEmail (getEmail contactT) ; printPhone (getPhone contactT)
 
+		let myStrStr str toFind =
+			let rec loop index = match index with
+				| index when String.length str < String.length toFind -> -1
+				| index when String.length str - index < String.length toFind -> -1
+				| _ -> if String.equal toFind (String.sub str index (String.length toFind)) = true then 0 else loop (index + 1)
+			in loop 0
+
 		let strCmpUnsensi refStr toCheck =
 			let lowRef = String.lowercase_ascii refStr
 			and lowToCheck = String.lowercase_ascii toCheck
-			in String.compare lowRef lowToCheck
+			in myStrStr lowToCheck lowRef
 
 		let cmpAllUnsensi refStr id tupleToCheck =
 			if strCmpUnsensi refStr (getFirstName tupleToCheck) = 0 ||
@@ -77,4 +88,5 @@ module Contact : CONTACT =
 				strCmpUnsensi refStr (getPhone tupleToCheck) = 0
 			then 0
 			else -1
+
 	end

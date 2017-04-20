@@ -16,13 +16,13 @@ module Agenda : AGENDA =
   struct
     let addContact list1 newTuple =
       let newco = [Contact.formatContact newTuple]
-	  in List.sort (fun x y -> if (Contact.getLastName x) > (Contact.getLastName y)
+	  in List.sort (fun first sec -> if (Contact.getLastName first) > (Contact.getLastName sec)
                                                                   then 1
                                                                   else
-                                                                    if (Contact.getLastName x) <> (Contact.getLastName y)
+                                                                    if (Contact.getLastName first) <> (Contact.getLastName sec)
                                                                       then 0
                                                                     else
-                                                                      if (Contact.getFirstName x) > (Contact.getFirstName y)
+                                                                      if (Contact.getFirstName first) > (Contact.getFirstName sec)
                                                                         then 1
                                                                       else 0 ) (List.append list1 newco)
 

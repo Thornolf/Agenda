@@ -9,6 +9,7 @@ type contact
 	val getPhone : contact -> string
 	val sizelst : 'a list -> int
 	val strSub : string -> int -> string
+	val myStrStr : string -> String.t -> int
 	val strCmpUnsensi : string -> string -> int
 	val cmpAllUnsensi : string -> int -> contact -> int
 
