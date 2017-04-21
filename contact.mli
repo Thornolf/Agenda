@@ -12,14 +12,12 @@ type contact
 	val myStrStr : string -> String.t -> int
 	val strCmpUnsensi : string -> string -> int
 	val cmpAllUnsensi : string -> int -> contact -> int
-	val allNumber : string -> bool
 	val verifPhone : string -> bool
-
+	val verifNumber : string -> int -> bool
+	val verifMail : string -> bool
 	val verifAge : int -> bool
-
 	val makeHyphen : string -> char -> string
 	val makeFirstName : string -> string
-
 	val printID : int -> unit
 	val printFirstName : string -> unit
 	val printLastName : string -> unit

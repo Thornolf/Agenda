@@ -1,28 +1,36 @@
 module type CONTACT =
 	sig
 		type contact = (string * string * int * string * string);;
+
+	(* Fonctions de création d'un contact ! *)
 		val createContact : string -> string -> int -> string -> string -> (string * string * int * string * string)
 		val formatContact : string * string * int * string * string -> contact
+		val makeHyphen : string -> char -> string
+		val makeFirstName : string -> string
+
+	(* Fonctions de récupération des éléments d'un contact *)
 		val getFirstName : contact -> string
 		val getLastName : contact -> string
 		val getAge : contact -> int
 		val getEmail : contact -> string
 		val getPhone : contact -> string
-		val sizelst : 'a list -> int
-		val strSub : string -> int -> int -> string
-		val addString : string -> int -> string
-		val printElem : string -> int -> string
+
+	(* Fonctions de vérification des éléments d'un contact *)
+		val verifPhone : string -> bool
+		val verifAge : int -> bool
+		val verifNumber : string -> int -> bool
+		val verifMail : string -> bool
 		val myStrStr : string -> String.t -> int
 		val strCmpUnsensi : string -> string -> int
 		val cmpAllUnsensi : string -> int -> contact -> int
-		val allNumber : string -> bool
-		val verifPhone : string -> bool
 
-		val verifAge : int -> bool
 
-		val makeHyphen : string -> char -> string
-		val makeFirstName : string -> string
+		val sizelst : 'a list -> int
+		val strSub : string -> int -> int -> string
+		val addString : string -> int -> string
 
+	(* Fonction permettant d'afficher chaque élément d'un contact *)
+		val printElem : string -> int -> string
 		val printID : int -> unit
 		val printFirstName : string -> unit
 		val printLastName : string -> unit
@@ -118,15 +126,27 @@ module Contact : CONTACT =
 			then 0
 			else -1
 
-		let allNumber = function
-			| str when str = "0" -> false
-			| _ -> true
+		let rec verifNumber str idx =
+			match String.get str idx with
+				| '0' .. '9' when idx = ((String.length str) - 1) -> true
+				| '0' .. '9' -> true && verifyPhone str (idx + 1)
+				| ' ' when idx = 2 || idx = 5 || idx = 8 || idx = 11 -> true && verifyPhone str (idx + 1)
+				| _ -> false
 
 		let verifPhone  = function
 			| str when String.get str 0 <> '0' -> false
 			| str when String.length str <> 14 -> false
 			| str when String.get str 2 <> ' ' && String.get str 5 <> ' ' && String.get str 8 <> ' ' && String.get str 11 <> ' ' -> false
-			| str when allNumber str = false -> false
+			| str when verifyPhone str 0 = false -> false
+			| _ -> true
+
+		let verifMail = function
+			| str when String.length str < 5 -> false
+			| str when (String.index str '@') <= 0 -> false
+			| str when (String.index str '@') <> (String.rindex str '@') -> false
+			| str when (String.rindex str '.' ) = ((String.length str) - 1) -> false
+			| str when (String.rindex str '.') < (String.rindex str '@') -> false
+			| str when (String.rindex str '.') = ((String.rindex str '@') + 1) -> false
 			| _ -> true
 
 	end
