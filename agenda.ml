@@ -26,14 +26,14 @@ module type AGENDA =
 module Agenda : AGENDA =
   struct
 
-    let addContact list1 newTuple =
+    let addContact lst newTuple =
 		if Contact.getLastName newTuple = "" || Contact.getFirstName newTuple = ""
 		|| Contact.verifAge (Contact.getAge newTuple) = false || Contact.verifPhone (Contact.getPhone newTuple) = false
 		|| Contact.verifMail (Contact.getEmail newTuple) = false
 			then raise (Add_Contact_With_Invalid_Data)
 		else
       		let newco = [Contact.formatContact newTuple]
-	  		in List.sort (fun first sec -> if first > sec then 1 else 0) (List.append list1 newco)
+	  		in List.sort (fun first sec -> if first > sec then 1 else 0) (List.append lst newco)
 
     let printContacts lst whichfield str =
     	let rec loop acc = function

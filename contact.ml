@@ -106,14 +106,14 @@ module Contact : CONTACT =
 	struct
 		type contact = (string * string * int * string * string);;
 
-		let	strSub s en beg =
-			if String.length s < en
-				then s
-			else if String.length s < beg
-				then s
+		let	strSub str limit beg =
+			if String.length str < limit
+				then str
+			else if String.length str < beg
+				then str
 			else
 				let buff = Buffer.create 0
-				in Buffer.add_string buff s ; Buffer.sub buff beg en
+				in Buffer.add_string buff str ; Buffer.sub buff beg limit
 
 		let makeHyphen str chr =
 			if String.contains str chr = false
@@ -195,12 +195,12 @@ module Contact : CONTACT =
 
 		let cmpAllUnsensi refStr id tupleToCheck =
 			if strCmpUnsensi refStr (getFirstName tupleToCheck) = 0 ||
-				strCmpUnsensi refStr (getLastName tupleToCheck) = 0 ||
-				strCmpUnsensi refStr (string_of_int id) = 0 ||
-				strCmpUnsensi refStr (string_of_int (getAge tupleToCheck)) = 0 ||
-				strCmpUnsensi refStr (getEmail tupleToCheck) = 0 ||
-				strCmpUnsensi refStr (getPhone tupleToCheck) = 0
-			then 0
+			strCmpUnsensi refStr (getLastName tupleToCheck) = 0 ||
+			strCmpUnsensi refStr (string_of_int id) = 0 ||
+			strCmpUnsensi refStr (string_of_int (getAge tupleToCheck)) = 0 ||
+			strCmpUnsensi refStr (getEmail tupleToCheck) = 0 ||
+			strCmpUnsensi refStr (getPhone tupleToCheck) = 0
+				then 0
 			else -1
 
 		let rec verifNumber str idx =
