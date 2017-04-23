@@ -1,6 +1,5 @@
-type fieldEvent = AllEvent | IdEvent | Title | Date | Time | Duration;;
-
 type field = All | Id | FirstName | LastName | Age | Email | Phone;;
+type fieldEvent = AllEvent | IdEvent | Title | Date | Time | Duration;;
 
 exception 	Remove_Impossible_On_An_Empty_List
 exception	Remove_Using_An_Invalid_Id
@@ -13,7 +12,7 @@ module type AGENDA =
     val addContact : Contact.contact list -> string * string * int * string * string -> Contact.contact list
 
 	(* Permet d'ajouter un event dans une liste d'event *)
-	val addEvent : Event.event list -> string * string * string* int * Contact.contact list -> Event.event list
+	val addEvent : Event.event list -> string * string * string * int * Contact.contact list -> Event.event list
 
 	(* Retourne l'ID d'un contact correspondant à certains critères *)
 	val getContactId   : Contact.contact list -> field -> string -> int
@@ -41,17 +40,14 @@ module Agenda : AGENDA =
   struct
 
     let addContact lst newTuple =
-		if Contact.getLastName newTuple = "" || Contact.getFirstName newTuple = ""
-		|| Contact.verifAge (Contact.getAge newTuple) = false || Contact.verifPhone (Contact.getPhone newTuple) = false
-		|| Contact.verifMail (Contact.getEmail newTuple) = false
+	let newco =
+		if Contact.getLastName (Contact.formatContact newTuple) = "" || Contact.getFirstName (Contact.formatContact newTuple) = ""
+		|| Contact.verifAge (Contact.getAge (Contact.formatContact newTuple)) = false || Contact.verifPhone (Contact.getPhone (Contact.formatContact newTuple)) = false
+		|| Contact.verifMail (Contact.getEmail (Contact.formatContact newTuple)) = false
 			then raise (Add_Contact_With_Invalid_Data)
 		else
-      		let newco = [Contact.formatContact newTuple]
+			[Contact.formatContact newTuple]
 	  		in List.sort (fun first sec -> if first > sec then 1 else 0) (List.append lst newco)
-
-	let addEvent lst newTuple =
-		let newEv = [Event.formatEvent newTuple]
-		in List.sort (fun first sec -> if Event.getTitle first > Event.getTitle sec then 1 else 0) (List.append lst newEv)
 
     let printContacts lst whichfield str =
     	let rec loop acc = function
@@ -66,6 +62,10 @@ module Agenda : AGENDA =
     			| Email -> if Contact.strCmpUnsensi str (Contact.getEmail x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
     			| Phone -> if Contact.strCmpUnsensi str (Contact.getPhone x) = 0 then Contact.printAll acc x ; loop (acc + 1) xs
     	in loop 0 lst
+
+	let addEvent lst newTuple =
+		let newEv = [Event.formatEvent newTuple]
+		in List.sort (fun first sec -> if Event.getTitle first > Event.getTitle sec then 1 else 0) (List.append lst newEv)
 
 	let printEvents lst eventField str =
 		let rec loop acc = function

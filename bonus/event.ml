@@ -1,35 +1,6 @@
-module type EVENT =
-	sig
-		type event = (string * string * string * int * Contact.contact list)
+open Contact;;
 
-	(* Fonction de création d'un event *)
-		val createEvent : string -> string -> string -> int -> Contact.contact list -> event
-
-		val formatEvent : string * string * string * int * Contact.contact list -> event
-
-	(* Fonction de récupération des élément d'un event *)
-		val getTitle : event -> string
-		val getDate : event -> string
-		val getTime : event -> string
-		val getDur : event -> int
-		val getContacts : event -> Contact.contact list
-
-	(* Fonctions d'affichage des éléments d'un event *)
-		val printTitle : string -> unit
-		val printDate : string -> unit
-		val printTime : string -> unit
-		val printDuration : int -> unit
-		val printInvited : Contact.contact list -> unit
-		val printAllEvent : int -> event -> unit
-
-		val cmpAll : string -> int -> event -> int
-
-	end
-
-module Event : EVENT =
-	struct
-		type event = (string * string * string * int * Contact.contact list)
-
+type event = (string * string * string * int * Contact.contact list)
 
 		let	createEvent title date time dur cntList =
 			(title, date, time, dur, cntList)
@@ -50,7 +21,7 @@ module Event : EVENT =
 		let printDuration dur = print_string (string_of_int dur) ; print_endline " min.\n Guests :"
 		let rec printInvited  = function
 			| [] -> print_string ""
-			| x::xs -> printFirstName (getFirstName x) ; print_string " " ; printLastName (getLastName x) ; print_endline "" ; printInvited xs
+			| x::xs -> Contact.printFirstName (Contact.getFirstName x) ; print_string " " ; Contact.printLastName (Contact.getLastName x) ; print_endline "" ; printInvited xs
 		let printAllEvent id eventT =
 			printIDEvent id ; printTitle (getTitle eventT) ; printDate (getDate eventT) ;
 			printTime (getTime eventT) ; printDuration (getDur eventT) ; printInvited (getContacts eventT)
@@ -63,4 +34,3 @@ module Event : EVENT =
 			Contact.strCmpUnsensi refStr (string_of_int (getDur tupleToCheck)) = 0
 				then 0
 			else -1
-	end
