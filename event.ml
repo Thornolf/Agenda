@@ -50,7 +50,7 @@ module Event : EVENT =
 		let printDuration dur = print_string (string_of_int dur) ; print_endline " min.\n Guests :"
 		let rec printInvited  = function
 			| [] -> print_string ""
-			| x::xs -> printFirstName (getFirstName x) ; print_string " " ; printLastName (getLastName x) ; print_endline "" ; printInvited xs
+			| x::xs -> Contact.printFirstName (Contact.getFirstName x) ; print_string " " ; Contact.printLastName (Contact.getLastName x) ; print_endline "" ; printInvited xs
 		let printAllEvent id eventT =
 			printIDEvent id ; printTitle (getTitle eventT) ; printDate (getDate eventT) ;
 			printTime (getTime eventT) ; printDuration (getDur eventT) ; printInvited (getContacts eventT)
